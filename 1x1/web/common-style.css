@@ -1,0 +1,76 @@
+
+
+body {
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+
+    font-family: Arial, sans-serif;
+    color: #cecece;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .strokeme
+  {
+      color: white;
+      text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;  
+  }
+
+  .task {
+    display: none;
+    margin-bottom: 20px;
+  }
+
+  .visible {
+    display: block;
+  }
+
+  .feedback {
+    font-size: 1.5em;
+    margin-left: 10px;
+  }
+
+  .correct {
+    color: green;
+  }
+
+  .wrong {
+    color: red;
+  }
+
+  #progress-bar-container {
+    width: 100%;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  #progress-bar {
+    height: 20px;
+    width: 0%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+  }
+
+  #score,
+  #today-results {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .controls {
+    margin-bottom: 20px;
+  }
+
+  button {
+    margin-right: 10px;
+  }

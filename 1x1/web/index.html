@@ -1,70 +1,54 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>Mathetrainer</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="fancy-style.css">
+  <link rel="stylesheet" href="common-style.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .task {
-      display: none;
-      margin-bottom: 20px;
-    }
-    .visible {
-      display: block;
-    }
-    .feedback {
-      font-size: 1.5em;
-      margin-left: 10px;
-    }
-    .correct {
-      color: green;
-    }
-    .wrong {
-      color: red;
-    }
-    #progress-bar-container {
-      width: 100%;
-      background-color: #eee;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    #progress-bar {
-      height: 20px;
-      width: 0%;
-      background-color: #4caf50;
-      transition: width 0.3s ease;
-    }
-    #score, #today-results {
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    .controls {
-      margin-bottom: 20px;
-    }
-    button {
-      margin-right: 10px;
-    }
+
   </style>
 </head>
+
 <body>
-  <h2>Mathetrainer</h2>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    crossorigin="anonymous"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+
+  <h2 class="strokeme">Mathetrainer</h2>
 
   <div class="controls">
-    <label>
-      <input type="checkbox" id="include-division" />
-      Division einbeziehen
-    </label>
-    <button onclick="startRound()">Start</button>
-    <button onclick="resetPage()">Reset</button>
+    <div class="container">
+
+      <label class="strokeme">
+        <input class="form-check-input " type="checkbox" id="include-division" checked />
+        Division einbeziehen
+      </label>
+
+      <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-primary" onclick="startRound()">Start</button>
+        <button class="btn btn-primary" onclick="resetPage()">Reset</button>
+      </div>
+    </div>
   </div>
 
-  <div id="today-results"></div>
+  <div class="strokeme" id="today-results"></div>
   <div id="score">Punktzahl: 0 / 10</div>
   <div id="progress-bar-container">
     <div id="progress-bar"></div>
@@ -72,20 +56,20 @@
   <div id="task-container"></div>
 
   <script>
-    const totalTasks = 2;
+    const totalTasks = 10;
     const todayKey = new Date().toISOString().split('T')[0];
     const storageKey = 'multiplikation_' + todayKey;
-  
+
     const taskContainer = document.getElementById('task-container');
     const progressBar = document.getElementById('progress-bar');
     const scoreDisplay = document.getElementById('score');
     const todayResultsDisplay = document.getElementById('today-results');
     const includeDivisionCheckbox = document.getElementById('include-division');
-  
+
     let tasks = [];
     let currentIndex = 0;
     let score = 0;
-  
+
     function resetUI() {
       taskContainer.innerHTML = '';
       score = 0;
@@ -93,19 +77,21 @@
       progressBar.style.width = '0%';
       scoreDisplay.textContent = `Punktzahl: 0 / ${totalTasks}`;
     }
-  
+
     function resetPage() {
       location.reload();
     }
-  
-    function generateTasks(includeDivision = false) {
+
+    function generateTasks(includeDivision = true) {
       const generated = [];
       while (generated.length < totalTasks) {
         const isDivision = includeDivision && Math.random() < 0.5;
+
         if (isDivision) {
-          const divisor = Math.floor(Math.random() * 10) + 1;
-          const result = Math.floor(Math.random() * 10) + 1;
+          const divisor = Math.floor(Math.random() * 8) + 2; // 2–9
+          const result = Math.floor(Math.random() * 8) + 2;  // 2–9
           const dividend = divisor * result;
+
           if (dividend < 100) {
             generated.push({
               question: `${dividend} ÷ ${divisor}`,
@@ -113,8 +99,9 @@
             });
           }
         } else {
-          const a = Math.floor(Math.random() * 9) + 1;
-          const b = Math.floor(Math.random() * 9) + 1;
+          const a = Math.floor(Math.random() * 8) + 2; // 2–9
+          const b = Math.floor(Math.random() * 8) + 2; // 2–9
+
           generated.push({
             question: `${a} × ${b}`,
             answer: a * b
@@ -123,30 +110,31 @@
       }
       return generated;
     }
-  
+
+
     function updateProgress(index) {
       const percent = ((index + 1) / totalTasks) * 100;
       progressBar.style.width = percent + '%';
       scoreDisplay.textContent = `Punktzahl: ${score} / ${totalTasks}`;
     }
-  
+
     function showTask(index) {
       const task = tasks[index];
       const taskDiv = document.createElement('div');
       taskDiv.classList.add('task', 'visible');
-  
+
       taskDiv.innerHTML = `
         <label>${task.question} = 
           <input type="number" id="answer-${index}" />
         </label>
         <span class="feedback" id="feedback-${index}"></span>
       `;
-  
+
       taskContainer.appendChild(taskDiv);
-  
+
       const input = taskDiv.querySelector('input');
       input.focus();
-  
+
       input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
           const userAnswer = parseInt(input.value, 10);
@@ -159,10 +147,10 @@
             feedback.textContent = '❌';
             feedback.className = 'feedback wrong';
           }
-  
+
           input.disabled = true;
           updateProgress(index);
-  
+
           setTimeout(() => {
             taskDiv.classList.remove('visible');
             if (index + 1 < totalTasks) {
@@ -171,29 +159,51 @@
               const endMessage = document.createElement('p');
               endMessage.innerHTML = `<strong>Runde abgeschlossen: ${score} von ${totalTasks} richtig.</strong>`;
               taskContainer.appendChild(endMessage);
-  
+
               saveResult(score);
             }
           }, 1000);
         }
       });
     }
-  
+
     function startRound() {
       resetUI();
       const includeDivision = includeDivisionCheckbox.checked;
       tasks = generateTasks(includeDivision);
       showTask(0);
     }
-  
-    function saveResult(score) {
 
-      let results = JSON.parse(localStorage.getItem(storageKey)) || [];
+    function saveResult(score) {
+      const today = new Date().toISOString().split('T')[0];
+      const key = 'multiplikation_' + today;
+
+      // 1. Aktuelle Ergebnisse lesen oder neues Array anlegen
+      let results = JSON.parse(localStorage.getItem(key)) || [];
       results.push(score);
-      localStorage.setItem(storageKey, JSON.stringify(results));
-      showTodayResults(); // <- jetzt korrekt hier aufrufen
+      localStorage.setItem(key, JSON.stringify(results));
+
+      // 2. Überprüfen, ob mehr als 5 verschiedene Tage gespeichert sind
+      const allKeys = Object.keys(localStorage).filter(k => k.startsWith('multiplikation_'));
+
+      // Extrahiere Datum aus Key und sortiere nach Datum
+      const sortedKeys = allKeys.sort((a, b) => {
+        const dateA = a.replace('multiplikation_', '');
+        const dateB = b.replace('multiplikation_', '');
+        return new Date(dateA) - new Date(dateB);
+      });
+
+      // 3. Wenn mehr als 5 Tage vorhanden sind, lösche die ältesten
+      while (sortedKeys.length > 5) {
+        const oldestKey = sortedKeys.shift();
+        localStorage.removeItem(oldestKey);
+      }
+
+      // 4. Ergebnisse anzeigen
+      showTodayResults();
     }
-  
+
+
     function showTodayResults() {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
@@ -210,9 +220,16 @@
         todayResultsDisplay.textContent = 'Heute wurden noch keine Runden gespielt.';
       }
     }
-  
+
     showTodayResults();
   </script>
-  
+
 </body>
+
 </html>
+
+
+
+<!-- 
+Foto von <a href="https://unsplash.com/de/@_k_arinn?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Karina Vorozheeva</a> auf <a href="https://unsplash.com/de/fotos/foto-von-drei-schmetterlingen-die-auf-violetten-blutenblattern-bestauben-Kol2ib6ehQE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+-->
