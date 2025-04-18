@@ -1,76 +1,159 @@
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 body {
-    background-image: url('images/background.jpg');
-    background-size: cover;
+
+    font-family: Arial, sans-serif;
+    color: #cecece;
+    min-width: 480px;
+}
+
+.background {
+    width: 100%;
+    background-image: url('images/huhner2.jpg');
+    background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
     background-color: black;
 
-    font-family: Arial, sans-serif;
-    color: #cecece;
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-  }
 
-  .strokeme
-  {
-      color: white;
-      text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000;  
-  }
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    z-index: -999999;
+    top: 0px;
+    min-width: 400px;
+}
 
-  .task {
+@media (max-width: 480px) {
+    background {
+        background-image: url('images/huhner3.jpg');
+    }
+}
+
+@media (min-width: 481px) {
+    background {
+        background-image: url('images/huhner2.jpg');
+    }
+}
+
+.backgrounddarkener:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -999998;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.strokeme {
+    color: white;
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.task {
     display: none;
     margin-bottom: 20px;
-  }
+}
 
-  .visible {
+.visible {
     display: block;
-  }
+}
 
-  .feedback {
+.feedback {
     font-size: 1.5em;
     margin-left: 10px;
-  }
+}
 
-  .correct {
+.correct {
     color: green;
-  }
+}
 
-  .wrong {
+.wrong {
     color: red;
-  }
+}
 
-  #progress-bar-container {
+#progress-bar-container {
     width: 100%;
     background-color: #eee;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
-  }
+}
 
-  #progress-bar {
+#progress-bar {
     height: 20px;
     width: 0%;
     background-color: #4caf50;
     transition: width 0.3s ease;
-  }
+}
 
-  #score,
-  #today-results {
+#score,
+#today-results {
     margin-bottom: 10px;
     font-weight: bold;
-  }
+}
 
-  .controls {
+.controls {
     margin-bottom: 20px;
-  }
+}
 
-  button {
+button {
     margin-right: 10px;
-  }
+
+}
+
+/***** Footer *****/
+
+footer {
+    margin-top: 60px;
+    margin-bottom: 15px;
+    padding: 5px;
+    background: #444;
+    color: #aaa;
+    text-align: left;
+    font-size: 0.75rem;
+}
+
+.footer-left a {
+    color: #ddd;
+    border-bottom: 1px dashed #ddd;
+}
+
+.footer-left a:hover, .footer-left a:focus {
+    color: #ddd;
+    border: 0;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-right a {
+    margin: 0 6px;
+    font-size: 32px;
+    color: #aaa;
+}
+
+.footer-right a:hover, .footer-right a:focus {
+    color: #eee;
+}
+
+.footer-bottom {
+    padding-bottom: 25px;
+    text-align: center;
+}
+
+.footer-bottom a {
+    font-size: 32px;
+    color: #666;
+    line-height: 40px;
+}
+
+.footer-bottom a:hover, .footer-bottom a:focus {
+    color: #888;
+}

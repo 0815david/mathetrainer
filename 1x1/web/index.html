@@ -2,234 +2,94 @@
 <html lang="de">
 
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Mathetrainer</title>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Mathetrainer</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet">
 
-  <link rel="stylesheet" href="fancy-style.css">
-  <link rel="stylesheet" href="common-style.css">
-  <style>
+    <link href="fancy-style.css" rel="stylesheet">
+    <link href="common-style.css" rel="stylesheet">
+    <style>
 
-  </style>
+    </style>
 </head>
 
 <body>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-    crossorigin="anonymous"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-    crossorigin="anonymous"></script>
-
-  <h2 class="strokeme">Mathetrainer</h2>
-
-  <div class="controls">
-    <div class="container">
-
-      <label class="strokeme">
-        <input class="form-check-input " type="checkbox" id="include-division" checked />
-        Division einbeziehen
-      </label>
-
-      <div class="d-grid gap-2 d-md-block">
-        <button class="btn btn-primary" onclick="startRound()">Start</button>
-        <button class="btn btn-primary" onclick="resetPage()">Reset</button>
-      </div>
+<div class="background backgrounddarkener">
+    <div class=" bg-dark bg-opacity-75">
+        <nav class="navbar navbar-expand-md navbar-dark mb-3">
+            <div class="container-fluid">
+                <button aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
+                        data-bs-target="#navbarScroll" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand strokeme active text-success" href="index.html" style="font-weight: 700;"><h2>
+                    Mathetrainer</h2></a>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a aria-current="page" class="nav-link" href="learn.html">Lern-Modus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="1x1.html">1x1 Quiz</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-  </div>
-
-  <div class="strokeme" id="today-results"></div>
-  <div id="score">Punktzahl: 0 / 10</div>
-  <div id="progress-bar-container">
-    <div id="progress-bar"></div>
-  </div>
-  <div id="task-container"></div>
-
-  <script>
-    const totalTasks = 10;
-    const todayKey = new Date().toISOString().split('T')[0];
-    const storageKey = 'multiplikation_' + todayKey;
-
-    const taskContainer = document.getElementById('task-container');
-    const progressBar = document.getElementById('progress-bar');
-    const scoreDisplay = document.getElementById('score');
-    const todayResultsDisplay = document.getElementById('today-results');
-    const includeDivisionCheckbox = document.getElementById('include-division');
-
-    let tasks = [];
-    let currentIndex = 0;
-    let score = 0;
-
-    function resetUI() {
-      taskContainer.innerHTML = '';
-      score = 0;
-      currentIndex = 0;
-      progressBar.style.width = '0%';
-      scoreDisplay.textContent = `Punktzahl: 0 / ${totalTasks}`;
-    }
-
-    function resetPage() {
-      location.reload();
-    }
-
-    function generateTasks(includeDivision = true) {
-      const generated = [];
-      while (generated.length < totalTasks) {
-        const isDivision = includeDivision && Math.random() < 0.5;
-
-        if (isDivision) {
-          const divisor = Math.floor(Math.random() * 8) + 2; // 2–9
-          const result = Math.floor(Math.random() * 8) + 2;  // 2–9
-          const dividend = divisor * result;
-
-          if (dividend < 100) {
-            generated.push({
-              question: `${dividend} ÷ ${divisor}`,
-              answer: result
-            });
-          }
-        } else {
-          const a = Math.floor(Math.random() * 8) + 2; // 2–9
-          const b = Math.floor(Math.random() * 8) + 2; // 2–9
-
-          generated.push({
-            question: `${a} × ${b}`,
-            answer: a * b
-          });
-        }
-      }
-      return generated;
-    }
 
 
-    function updateProgress(index) {
-      const percent = ((index + 1) / totalTasks) * 100;
-      progressBar.style.width = percent + '%';
-      scoreDisplay.textContent = `Punktzahl: ${score} / ${totalTasks}`;
-    }
+    <div class="container strokeme">
 
-    function showTask(index) {
-      const task = tasks[index];
-      const taskDiv = document.createElement('div');
-      taskDiv.classList.add('task', 'visible');
+        <h2>Herzlich Wilkommen</h2>
 
-      taskDiv.innerHTML = `
-        <label>${task.question} = 
-          <input type="number" id="answer-${index}" />
-        </label>
-        <span class="feedback" id="feedback-${index}"></span>
-      `;
+        <p>zu unserem kleinen Mathetrainer</p>
+        <p>Wähle im Menü zwischen Lernmodus (multiple-choice) und Quizmodus.</p>
 
-      taskContainer.appendChild(taskDiv);
+        <ul>
+            <li>Du löst jeweils 10 Aufgaben pro Runde.</li>
+            <li>Deine Runden-Ergebnisse des Tages werden angezeigt.</li>
+            <li>Es werden keine Ergebnisse o.ä. im Web/Cloud/etc gespeichert oder verschickt. Alles bleibt auf deinem
+                Gerät.
+            </li>
+        </ul>
+    </div>
 
-      const input = taskDiv.querySelector('input');
-      input.focus();
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 footer-left">
+                    <a href="https://www.minis1x1.de">https://www.minis1x1.de</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 footer-left">
+                    <a href="impressum.html">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-          const userAnswer = parseInt(input.value, 10);
-          const feedback = document.getElementById(`feedback-${index}`);
-          if (userAnswer === task.answer) {
-            feedback.textContent = '✅';
-            feedback.className = 'feedback correct';
-            score++;
-          } else {
-            feedback.textContent = '❌';
-            feedback.className = 'feedback wrong';
-          }
+    <script crossorigin="anonymous"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
-          input.disabled = true;
-          updateProgress(index);
-
-          setTimeout(() => {
-            taskDiv.classList.remove('visible');
-            if (index + 1 < totalTasks) {
-              showTask(index + 1);
-            } else {
-              const endMessage = document.createElement('p');
-              endMessage.innerHTML = `<strong>Runde abgeschlossen: ${score} von ${totalTasks} richtig.</strong>`;
-              taskContainer.appendChild(endMessage);
-
-              saveResult(score);
-            }
-          }, 1000);
-        }
-      });
-    }
-
-    function startRound() {
-      resetUI();
-      const includeDivision = includeDivisionCheckbox.checked;
-      tasks = generateTasks(includeDivision);
-      showTask(0);
-    }
-
-    function saveResult(score) {
-      const today = new Date().toISOString().split('T')[0];
-      const key = 'multiplikation_' + today;
-
-      // 1. Aktuelle Ergebnisse lesen oder neues Array anlegen
-      let results = JSON.parse(localStorage.getItem(key)) || [];
-      results.push(score);
-      localStorage.setItem(key, JSON.stringify(results));
-
-      // 2. Überprüfen, ob mehr als 5 verschiedene Tage gespeichert sind
-      const allKeys = Object.keys(localStorage).filter(k => k.startsWith('multiplikation_'));
-
-      // Extrahiere Datum aus Key und sortiere nach Datum
-      const sortedKeys = allKeys.sort((a, b) => {
-        const dateA = a.replace('multiplikation_', '');
-        const dateB = b.replace('multiplikation_', '');
-        return new Date(dateA) - new Date(dateB);
-      });
-
-      // 3. Wenn mehr als 5 Tage vorhanden sind, lösche die ältesten
-      while (sortedKeys.length > 5) {
-        const oldestKey = sortedKeys.shift();
-        localStorage.removeItem(oldestKey);
-      }
-
-      // 4. Ergebnisse anzeigen
-      showTodayResults();
-    }
-
-
-    function showTodayResults() {
-      const stored = localStorage.getItem(storageKey);
-      if (stored) {
-        const results = JSON.parse(stored);
-        if (results.length > 0) {
-          let html = '<strong>Ergebnisse heute:</strong><ul>';
-          results.forEach((r, i) => {
-            html += `<li>Runde ${i + 1}: ${r} / ${totalTasks}</li>`;
-          });
-          html += '</ul>';
-          todayResultsDisplay.innerHTML = html;
-        }
-      } else {
-        todayResultsDisplay.textContent = 'Heute wurden noch keine Runden gespielt.';
-      }
-    }
-
-    showTodayResults();
-  </script>
-
+</div>
 </body>
 
 </html>
 
 
-
-<!-- 
+<!--
 Foto von <a href="https://unsplash.com/de/@_k_arinn?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Karina Vorozheeva</a> auf <a href="https://unsplash.com/de/fotos/foto-von-drei-schmetterlingen-die-auf-violetten-blutenblattern-bestauben-Kol2ib6ehQE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 -->
